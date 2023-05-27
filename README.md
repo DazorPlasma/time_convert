@@ -14,3 +14,9 @@ Small program that parses a given time as 24h and 12h format.
 **Output:**
 24h format: 05:02:00
 12h format: 05:02:00 AM
+
+**Input:** 13:03:59
+
+**Output:**
+24h format: 13:03:59
+12h format: 01:03:59 PM
