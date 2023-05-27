@@ -1,3 +1,4 @@
+# time_convert
 Small program that parses a given time as 24h and 12h format.
 
 ## Examples:
