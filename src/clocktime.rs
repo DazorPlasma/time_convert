@@ -77,7 +77,6 @@ enum CycleType {
 	PM,
 }
 
-#[inline]
 fn cycle_hours_to_24(hours: u8, cycle: CycleType) -> u8 {
 	match cycle {
 		CycleType::AM => hours,
@@ -91,7 +90,6 @@ fn cycle_hours_to_24(hours: u8, cycle: CycleType) -> u8 {
 	}
 }
 
-#[inline]
 fn has_no_numerics(s: &String) -> bool {
 	s.chars().any(|c| !c.is_numeric())
 }
