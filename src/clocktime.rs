@@ -1,5 +1,3 @@
-#![forbid(unsafe_code)]
-
 const HOURS_RANGE: std::ops::Range<u8> = 0..24;
 const MINUTES_RANGE: std::ops::Range<u8> = 0..60;
 const SECONDS_RANGE: std::ops::Range<u8> = 0..60;
