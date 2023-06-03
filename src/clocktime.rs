@@ -43,16 +43,16 @@ impl ClockTime {
     }
 
     fn validate(&self) -> Result<(), ParseClockTimeError> {
-        if HOURS_RANGE.contains(&self.hours) == false {
+        if !HOURS_RANGE.contains(&self.hours) {
             return Err(ParseClockTimeError::InvalidHours);
         }
-        if MINUTES_RANGE.contains(&self.minutes) == false {
+        if !MINUTES_RANGE.contains(&self.minutes) {
             return Err(ParseClockTimeError::InvalidMinutes);
         }
-        if SECONDS_RANGE.contains(&self.seconds) == false {
+        if !SECONDS_RANGE.contains(&self.seconds) {
             return Err(ParseClockTimeError::InvalidSeconds);
         }
-        return Ok(());
+        Ok(())
     }
 }
 
@@ -60,9 +60,9 @@ type ClockResult = Result<ClockTime, ParseClockTimeError>;
 
 pub fn new(hours: u8, minutes: u8, seconds: u8) -> ClockResult {
     let new_time = ClockTime {
-        hours: hours,
-        minutes: minutes,
-        seconds: seconds,
+        hours,
+        minutes,
+        seconds,
     };
 
     match new_time.validate() {
@@ -90,12 +90,12 @@ fn cycle_hours_to_24(hours: u8, cycle: CycleType) -> u8 {
     }
 }
 
-fn has_no_numerics(s: &String) -> bool {
+fn has_no_numerics(s: &str) -> bool {
     s.chars().any(|c| !c.is_numeric())
 }
 
 pub fn parse(input: &str) -> ClockResult {
-    let instances: Vec<&str> = input.split(":").collect();
+    let instances: Vec<&str> = input.split(':').collect();
 
     if instances.len() != 3 {
         return Err(ParseClockTimeError::BadFormat);
@@ -128,7 +128,7 @@ pub fn parse(input: &str) -> ClockResult {
         .or(Err(ParseClockTimeError::BadFormat))?;
     let seconds: u8 = instances[2]
         .split_whitespace()
-        .nth(0)
+        .next()
         .ok_or(ParseClockTimeError::BadFormat)?
         .parse()
         .or(Err(ParseClockTimeError::BadFormat))?;
@@ -143,7 +143,7 @@ pub fn parse(input: &str) -> ClockResult {
         None => hours,
     };
 
-    return new(hours, minutes, seconds);
+    new(hours, minutes, seconds)
 }
 
 #[cfg(test)]

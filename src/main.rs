@@ -11,7 +11,7 @@ fn main() {
     let time = match clocktime::parse(&input) {
         Ok(val) => val,
         Err(err) => {
-            eprintln!("{} {:?}", "ERROR:", err);
+            eprintln!("ERROR: {:?}", err);
             return;
         }
     };
