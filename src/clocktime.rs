@@ -8,7 +8,6 @@ pub struct ClockTime {
     seconds: u8,
 }
 
-#[allow(unused)]
 pub enum TimeFormat {
     TwentyFour,
     Twelve,
@@ -42,7 +41,7 @@ impl ClockTime {
         }
     }
 
-    fn validate(&self) -> Result<(), ParseClockTimeError> {
+    fn validate(self) -> Result<Self, ParseClockTimeError> {
         if !HOURS_RANGE.contains(&self.hours) {
             return Err(ParseClockTimeError::InvalidHours);
         }
@@ -52,23 +51,19 @@ impl ClockTime {
         if !SECONDS_RANGE.contains(&self.seconds) {
             return Err(ParseClockTimeError::InvalidSeconds);
         }
-        Ok(())
+        Ok(self)
     }
 }
 
 type ClockResult = Result<ClockTime, ParseClockTimeError>;
 
 pub fn new(hours: u8, minutes: u8, seconds: u8) -> ClockResult {
-    let new_time = ClockTime {
+    ClockTime {
         hours,
         minutes,
         seconds,
-    };
-
-    match new_time.validate() {
-        Ok(_) => Ok(new_time),
-        Err(err) => Err(err),
     }
+    .validate()
 }
 
 #[derive(Debug)]
